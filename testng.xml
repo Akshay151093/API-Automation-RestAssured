@@ -18,9 +18,9 @@
     <!-- Tests -->
     <test name="User API Tests">
         <classes>
-            <class name="test.UserTestsUsingDataProvider"/>
-            <class name="test.UserTestsUsingMap"/>
-            <class name="test.UserTestsUsingFaker"/>
+            <class name="tests.UserTestsUsingDataProvider"/>
+            <class name="tests.UserTestsUsingMap"/>
+            <class name="tests.UserTestsUsingFaker"/>
         </classes>
     </test>
 

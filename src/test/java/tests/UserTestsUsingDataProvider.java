@@ -1,15 +1,17 @@
-package test;
+package tests;
 
 import assertions.UserAssertions;
+import endpoints.UserEndPoints;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.*;
 import payload.User;
-import steps.UserSteps;
-import utilities.DataProviders;
+import utils.DataProviders;
+import utils.LogManagerUtil;
 
 @Epic("PET-STORE API")
 @Feature("USER API : DATA PROVIDER")
@@ -17,18 +19,19 @@ public class UserTestsUsingDataProvider {
 
     User payload;
     UserAssertions userAssertions;
-    UserSteps userSteps;
+    private static final Logger logger =
+            LogManagerUtil.getLogger(UserTestsUsingDataProvider.class);
 
     public UserTestsUsingDataProvider(){
         userAssertions = new UserAssertions();
-        userSteps = new UserSteps();
     }
 
     @Test(priority = 1, dataProvider = "payload", dataProviderClass = DataProviders.class)
     @Story("Create users")
-    @Description("Verify that a new user can be created successfully")
+    @Description("Verify that new users can be created successfully")
     void testCreateUsers(String id, String un, String fn,
                          String ln, String e, String pwd, String ph, String s) {
+        logger.info("");
         payload = new User();
         payload.setId(Integer.parseInt(id));
         payload.setUsername(un);
@@ -38,15 +41,16 @@ public class UserTestsUsingDataProvider {
         payload.setPassword(pwd);
         payload.setPhone(ph);
         payload.setUserStatus(Integer.parseInt(s));
-        Response createResponse = userSteps.createUser(payload);
+        Response createResponse = UserEndPoints.createUser(payload);
         userAssertions.verifyStatusCode(createResponse, 200);
+        logger.info("");
     }
 
     @Test (priority = 2, dependsOnMethods = "testCreateUsers", dataProvider = "usernames", dataProviderClass = DataProviders.class)
     @Story("Get users")
-    @Description("Verify user can be fetch successfully")
+    @Description("Verify users can be fetch successfully")
     void testGetUsers(String un){
-        Response getResponse = userSteps.getUser(un);
+        Response getResponse = UserEndPoints.getUser(un);
         userAssertions.verifyStatusCode(getResponse,200);
         userAssertions.verifyUsername(getResponse, payload.getUsername());
         userAssertions.verifyFirstName(getResponse, payload.getEmail());
@@ -56,11 +60,11 @@ public class UserTestsUsingDataProvider {
 
     @Test (priority = 3, dependsOnMethods = "testGetUsers", dataProvider = "usernames", dataProviderClass = DataProviders.class)
     @Story("Delete users")
-    @Description("Verify that user can be deleted successfully")
+    @Description("Verify that users can be deleted successfully")
     void testDeleteUsers(String un){
-        Response deleteResponse =userSteps.deleteUser(un);
+        Response deleteResponse =UserEndPoints.deleteUser(un);
         userAssertions.verifyStatusCode(deleteResponse,200);
-        Response getResponse = userSteps.getUser(un);
+        Response getResponse = UserEndPoints.getUser(un);
         userAssertions.verifyStatusCode(getResponse,404);
     }
 }

@@ -1,10 +1,14 @@
-package utilities;
+package utils;
+
+import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class TestDataManager {
+
+    private static final Logger logger = LogManagerUtil.getLogger(TestDataManager.class);
 
     private static void loadExcel(String file, String sheet) {
         Objects.requireNonNull(file, "path");
@@ -24,6 +28,7 @@ public class TestDataManager {
     }
 
     public LinkedHashMap<String, String> getTestData(String testDataLabel, String file, String sheet) {
+        logger.info("Retrieving test data '{}'.", testDataLabel);
         Objects.requireNonNull(testDataLabel);
         Objects.requireNonNull(file);
         Objects.requireNonNull(sheet);
@@ -31,6 +36,7 @@ public class TestDataManager {
         loadExcel(file, sheet);
         LinkedHashMap<String, String> data = ExcelUtils.getDataFromRow(testDataLabel);
         validateNotEmpty(data, "No test data found for: " + testDataLabel);
+        logger.info("Test data '{}' retrieved successfully.", testDataLabel);
         return data;
     }
 }
