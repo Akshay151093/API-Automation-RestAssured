@@ -19,7 +19,7 @@ public class UserTestsUsingDataProvider extends BaseTest{
 
     private static final Map<String, User> testUsers = new ConcurrentHashMap<>();
 
-    @Test(priority = 1, groups = {"user","smoke"}, dataProvider = "payload", dataProviderClass = DataProviders.class)
+    @Test(priority = 1, groups = {"user","smoke","regression"}, dataProvider = "payload", dataProviderClass = DataProviders.class)
     @Story("Create users")
     @Description("Verify that new users can be created successfully")
     void testCreateUsers(String id, String un, String fn,

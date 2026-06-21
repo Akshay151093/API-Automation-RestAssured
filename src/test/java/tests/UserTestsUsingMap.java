@@ -14,7 +14,7 @@ import utils.UserDataBuilder;
 @Feature("USER API : MAP")
 public class UserTestsUsingMap extends BaseTest{
 
-    @Test(priority = 1, groups = {"user","smoke"})
+    @Test(priority = 1, groups = {"user","smoke","regression"})
     @Story("Create user")
     @Description("Verify that a new user can be created successfully")
     void testCreateUser1() {
