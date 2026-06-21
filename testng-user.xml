@@ -3,7 +3,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <!-- Run only tests having group user from tests package. -->
-<suite name="API Automation Regression Suite"
+<suite name="API Automation User API Suite"
        verbose="2"
        parallel="classes"
        thread-count="3">

@@ -3,7 +3,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
 <!-- Run all the tests -->
-<suite name="API Automation Regression Suite"
+<suite name="API Automation Master Suite"
        verbose="2"
        parallel="classes"
        thread-count="3">
